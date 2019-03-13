@@ -1,19 +1,16 @@
 <html>
-<head>
-<title>HEADER</title>
-</head>
-<body>
-<p>
-<font color=red> ${error}</font>
-<p>
-<font color=green> ${good}</font>
 
-<form method=post >
-<br>Name: <input name="name" type=text>
-<br>Password:<input name="password" type=password>
-<input type=submit>
-/<form>
+<head>
+<title>First Web Application</title>
+</head>
+
+<body>
+	<font color="red">${errorMessage}</font>
+	<form method="post">
+		Name : <input type="text" name="name" />
+		Password : <input type="password" name="password" /> 
+		<input type="submit" />
+	</form>
 </body>
 
- 
 </html>

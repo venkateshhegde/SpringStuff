@@ -6,42 +6,37 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.in28mins.springboot.web.springbootwebapp.service.LoginService;
 
 
 @Controller
+@SessionAttributes("name")
 public class LoginController {
 	
+	@Autowired
+	LoginService service;
 	
-	@Autowired 
-	LoginService loginService;
-	
-	
-	@RequestMapping(value="/login", method= RequestMethod.POST)
-	public String  loginMessage1( ModelMap model, @RequestParam String name, @RequestParam String password )
-	{
-//		System.out.println(name);
-//		model.put("NAME", name);
-		model.put("NAME", name);
-		model.put("PASSWORD", password);
-		if (loginService.validate(name, password))
-		{
-			System.out.println("GOOD !!!! " + name + " "+   password);
-			model.put("good", "GOOD!");
-			return "login";	
-		}
-
-
-		System.out.println("FAILED!!!! " + name + " "+   password);
-		model.put("error", "bad user / pass");
+	@RequestMapping(value="/login", method = RequestMethod.GET)
+	public String showLoginPage(ModelMap model){
 		return "login";
 	}
-
-	@RequestMapping(value="/login", method= RequestMethod.GET)
-	public String  loginMessage( ModelMap model)
-	{
-//		System.out.println(name);
+	
+	@RequestMapping(value="/login", method = RequestMethod.POST)
+	public String showWelcomePage(ModelMap model, @RequestParam String name, @RequestParam String password){
+		
+		boolean isValidUser = service.validateUser(name, password);
+		
+		if (!isValidUser) {
+			model.put("errorMessage", "Invalid Credentials");
+			return "login";
+		}
+		
+		model.put("name", name);
+		model.put("password", password);
+		
 		return "welcome";
 	}
+
 }
