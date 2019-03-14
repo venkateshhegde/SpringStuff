@@ -23,6 +23,6 @@ public class TodoController {
 	public String showTodos(ModelMap model){
 		String name = (String) model.get("name");
 		model.put("todos", service.retrieveTodos(name));
-		return "list-todos";
+		return "list-todosJSP";
 	}
 }
